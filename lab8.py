@@ -14,6 +14,8 @@ def z1():
 def z2_3():
     cap = cv2.VideoCapture(0)
     down_points = (640, 480)
+    fly_img = cv2.imread('fly64.png') 
+    fly_h, fly_w = fly_img.shape[:2]
     i = 0
     while True:
         ret, frame = cap.read()
@@ -37,6 +39,10 @@ def z2_3():
                 distance = np.sqrt((320 - a) ** 2 + (240 - b) ** 2)
                 print('Расстояние до центра равно: ',distance)
 
+            start_x = int(a - fly_w / 2)
+            start_y = int(b - fly_h / 2)
+            frame[start_y:start_y+fly_h, start_x:start_x+fly_w] = fly_img
+
         cv2.imshow('frame', frame)
         if cv2.waitKey(1) & 0xFF == ord('q'):
             break
@@ -47,5 +53,6 @@ def z2_3():
     cap.release()
     cv2.waitKey(0)
     cv2.destroyAllWindows()
+
 
 
